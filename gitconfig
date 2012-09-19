@@ -2,7 +2,7 @@
 
 echo "  --------------------------------------------"
 echo "	System kontroli wersji GIT"
-echo "	Tworzenie i konfiguracja GIT"
+#echo "	Tworzenie i konfiguracja GIT"
 echo -e "	autor: Pawel Grygorowicz"
 echo -e " 	ver 1.6 2012.09.19 "
 echo "  --------------------------------------------"
@@ -30,6 +30,9 @@ echo "  --------------------------------------------"
 echo "  -- Git Hub ---------------------------------"
 echo "12. Tworzenie i konfiguracja GitHub"
 echo "13. Wyslanie danych do Github"
+echo "14. Pobranie danych do Github"
+echo "  --------------------------------------------"
+echo "999 git reset # przywraca stan katalogu roboczego"
 echo "  --------------------------------------------"
 echo "Wybrales: "
 read A;
@@ -92,12 +95,20 @@ case "$A" in
 
 		git clone git@github.com:pcxelja/twitter.git
 		git remote add origin git@github.com:pcxelja/twitter.git
-		git config branch.master.remote origin
-		git config branch.master.merge refs/heads/master
+		#git config branch.master.remote origin
+		#git config branch.master.merge refs/heads/master
 		;;
 		
 	"13")
 		git push
+		;;
+		
+	"14")
+		git pull
+		;;
+	
+	"999")
+		git reset # przywraca stan katalogu roboczego
 		;;
 	
 	*) echo "Bledna wartosc..."
