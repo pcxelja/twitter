@@ -1,0 +1,267 @@
+#!/bin/bash
+
+echo "  --------------------------------------------"
+echo "	System kontroli wersji GIT"
+echo "	Tworzenie i konfiguracja GIT"
+echo -e "	autor: Pawel Grygorowicz"
+echo -e " 	ver 1.6 2012.09.19 "
+echo "  --------------------------------------------"
+
+echo "......... Menu ........."
+echo "  --------------------------------------------"
+echo "1. Tworzenie repozytorium"
+echo "2. Podstawowa konfiguracja"
+#echo "21. config push"
+echo "  --------------------------------------------"
+echo "3. Git status"
+#echo "4. Git add . # dodawanie plikow"
+echo "5. Git commit -m #komentowanie + dzisiejsza data"
+echo "  --------------------------------------------"
+echo "6. Git log #pokazuje log’a commit’ow"
+echo "7. Git show #pokazuje commit’y (lub inne obiekty)"
+echo "8. Git - wyswietlenie konfiguracji"
+#echo "  --------------------------------------------"
+#echo "9. Wyslanie wersji GIT na 192.168.0.2"
+#echo "  --------------------------------------------"
+echo "10. qGit "
+echo "  --------------------------------------------"
+echo "11. Polecenia: "
+echo "  --------------------------------------------"
+echo "  -- Git Hub ---------------------------------"
+echo "12. Tworzenie i konfiguracja GitHub"
+echo "13. Wyslanie danych do Github"
+echo "  --------------------------------------------"
+echo "Wybrales: "
+read A;
+echo "  --------------------------------------------"
+
+
+case "$A" in
+
+	"1")
+		git init
+		./gitconfig
+		;;
+	"2")  
+		git config --global user.name pcxelja
+		git config --global user.email pcxelja@gmail.com
+		git config --global color.branch auto
+		git config --global color.diff auto
+		git config --global color.interactive auto
+		git config --global color.status auto
+		git config --global core.editor "mate -w"
+		./gitconfig
+		;;
+	"3")    
+		git status
+		./gitconfig
+		;;
+
+	"4")    
+		git add .
+		./gitconfig
+		;;
+
+	"5")    data=`date`
+		git commit -m "Commit wykonany: $data" 
+		./gitconfig
+		;;
+	"6")    
+		git log
+		./gitconfig
+		;;
+	"7")
+		git show
+		./gitconfig
+		;;
+	"8")
+		git config --global --list #wyswietli nam konfiguracje tylko globalna
+		git config --list #wyświetli konfiguracje dla repozytorium
+		./gitconfig
+		;;
+	"9")
+		git push ssh://192.168.0.2/git.git/ #wyeksportowanie danych na 192.168.0.2
+		;;
+	"10")
+	qgit
+	;;
+
+	"12") #konfigurowanie
+		#export http_proxy=http://10.144.1.10:8080
+		#git clone http://github.com/blablabla
+
+		git clone git@github.com:pcxelja/twitter.git
+		git remote add origin git@github.com:pcxelja/twitter.git
+		git config branch.master.remote origin
+		git config branch.master.merge refs/heads/master
+		;;
+		
+	"13")
+		git push
+		;;
+	
+	*) echo "Bledna wartosc..."
+esac
+
+#git rm #usuwanie pliku z repozytorium
+#git mv #przenosi plik
+#git fetch #pobiera nowe zmiany z zewnętrzengo repozytorium
+#git pul #fetch + merge
+#git push #wysyla zmiany do zewnetrznego repozytorium
+#git branch #tworzy/modyfikuje/usuwa branche
+#git checkout #przelancza katalog roboczy na inny branch
+#git merge # merguje dwa lub wiecej branchy
+#git rebase #zmiana punktu startu dla brancha
+#git reset #przywraca stan katalogu robocznego
+#git stash #zapisuje/odtwrza zmiany (rodzaj bardzo uzytecznego schowka)
+#git gc #porzadkuje i usuwa duplikaty
+#git tree # reprezentuje stan pojedynczego katalogu
+#git blob # zawiera zawartosc pliku bez zadnej dodatkowej struktury
+
+#git config --global --list #wyświetli nam konfiguracje tylko globalną
+#git config --list #wyświetli konfiguracje dla repozytorium
+
+#dodanie zdalnego repozytorium:
+#git remote add origin git@github.com:andrzejsliwa/git-and-scala.git
+#skonfigurowanie połaczenia miedzy lokalnym branch’em master a zdalnym origin:
+#git config branch.master.remote origin
+#git config branch.master.merge refs/heads/master
+
+#możemy również dodać dowolną liczbę innych zewnętrznych repozytoriów, z którymi będzięmy synchronizować nasze zmiany:
+#git remote add michal ssh://michal@niczsoft.com/glassfish-maven-plugin.git
+#git remote add andrzej ssh://andrzej@andrzejsliwa.com/glassfish-maven-plugin.git
+
+# przykladowy plik./.git/config
+# [core] 
+#repositoryformatversion = 0
+#filemode = true
+#bare = false
+#logallrefupdates = true
+#ignorecase = true
+#[remote "andrzej"]
+#url = ssh://andrzej@i-tool.eu/testowy.git
+#fetch = +refs/heads/*:refs/remotes/andrzej/*
+#[remote "origin"]
+#url = git@github.com:andrzejsliwa/git-and-scala.git
+#fetch = +refs/heads/*:refs/remotes/origin/*
+#[branch "master"]
+#remote = origin
+#merge = refs/heads/master
+
+
+
+#$ git tag v1.0 #tworzenie tag’a:
+#$ git tag -s v1.0 #tworzenie tag’a podpisanego z komentarzem:
+#$ git tag #wyświetlenie listy tagów:
+#$ git push --tags #wysyłanie naszego tag’a na zdalne repozytorium:
+
+
+#$ git branch nazwa_brancha #tworzenie brancha:
+#$ git checkout nazwa_brancha #przełączenie się na brancha:
+#$ git checkout -b nazwa_brancha #tworzenie i przełączenie się w jednym kroku:
+#$ git push origin nazwa_brancha #tworzenie brancha na zdalnym repozytorium:
+
+#mergowanie branch’y:
+#$ git checkout master
+#$ git status
+#$ git merge nazwa_brancha
+#... jeżeli były konflikty, to poprawiamy je, następnie ręcznie commitujemy:
+#$ git commit -a -m
+
+
+#$ git branch -d nazwa_brancha #kasowanie branch’a zmergowanego z master’em:
+#$ git branch -D nazwa_brancha #kasowanie branch’a nie zmergowanego z master’em:
+#$ git push origin :heads/nazwa_brancha #kasowanie zdalnego branch’a:
+
+
+#sprawdzenie log’a commit’ów:
+#$ git log
+#$ git log --since=”2 weeks ago”
+#$ git log nazwa_pliku
+#sprawdzenie kto zmieniał poszczególne lini pliku:
+#$ git blame nazwa_pliku
+#$ git blame -L 10,15 nazwa_pliku
+
+#1. pobranie zmian ze zdalnego repo.:
+#$ git pull
+#2. stworzenie lokalnego branch’a do pracy nad nowym “ficzerem” ;) i przęłączenie się na niego:
+#$ git checkout -b dodanie_tagowania
+#3. dodanie zmian do index’u (nasz cache zmian do commit’a):
+#$ git add nazwa_pliku
+#$ git add nazwa_katalogu
+#$ git rm nazwa_pliku
+#4. commit zmian do repozytorium (nadal lokalnie!)
+#$ git commit -m “komentarz” # commit z komentarzem
+#lub:
+#$ git commit # commit z komentarzem dodanym w edytorze
+#lub:
+#$ git commit -a # j/w, ale wszystkie zmiany zostaną dodane
+#automatycznie, bez dodawania ich do repozytorium
+#commit’ujemy wielokrotnie w ramach “ficzera” ...
+#5. wracamy do master’a
+#$ git checkout master
+#6. uaktualniamy sobie master’a (ze zdalnego repo.):
+#$ git pull
+#7. mergujemy brancha z master’em:
+#$ git merge dodanie_tagowania
+#8. “wypychamy” zmiany na zdalne repozytorium:
+#$ git push
+
+
+
+
+
+
+#git log --pretty=oneline #Przeglądanie wysłanych zmian:
+#git revert KLUCZ_HASH_WERSJI #"Cofanie" zmian do X wersji - Utworzenie NOWEJ wersji bazując na starej
+
+#Gałęzie
+
+#git branch NAZWA #Utworzenie nowej gałęzi:
+#git checkout -b NAZWA #utworzenie + przełączenie do niej
+#git branch #Wyświetlenie listy LOKALNYCH gałęzi:
+#git checkout NAZWA #Przełączanie (otwartej/edytowanej) gałęzi:
+#git branch -d NAZWA #Usunięcie gałęzi:
+#git merge NAZWA #Scalanie gałęzi (aktualnej z podaną -> Do aktualnej gałęzi zostaną "dodane" zmiany z gałęzi podanej - NIE ODWROTNIE):
+
+#git push NAZWAREPO #Wysłanie zmian:
+#git fetch NAZWAREPO #Pobranie zmian:
+#git branch -a #Wyświetlenie listy LOKALNYCH I ZDALNYCH gałęzi:
+#git push NAZWAREPO :NAZWAGAŁĘZI #Usunięcie zdalnej gałęzi:
+
+
+#Tagi  
+#git tag #Wyświetlenie tagów:
+#git tag -a NAZWA -m "TREŚĆ" #Dodanie taga:
+#git push NAZWAREPO NAZWATAGU # Wysłanie jednego taga do repo:
+#git push NAZWAREPO --tags #wysłanie wszystkich tagów do repo:
+
+
+#git checkout master
+#git merge text
+#git stash
+#git pull # 
+#git push #wyslanie systemu
+#git stash list
+
+
+#git branch #tworzy/modyfikuje/usuwa branch’e
+#git checkout #przełącza katalog roboczy na inny branch
+#git merge #merge’uje dwa lub wiecej branch’y
+#git rebase #zmienia punkt startu dla brancha
+#git reset #przywraca stan katalogu roboczego
+#git stash #zapisuje/odtwarza zmiany (rodzaj bardzo uzytecznego schowka)
+#git gc  #porządkowanie i usuwanie duplikatow
+
+#repozytirium zdalnie
+#Wykonać zdalnie:
+
+#ssh konto@server
+#mkdir naszprojekt.git
+#cd naszprojekt.git
+#git --bare init
+#Wykonać lokalnie:
+#git remote add origin ssh://konto@server/~/naszprojekt.git
+#git push origin master
+
+
